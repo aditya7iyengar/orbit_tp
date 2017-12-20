@@ -1,4 +1,6 @@
 defmodule OrbitTp.Body do
+  @moduledoc false
+
   use Agent
 
   defstruct ~w(mass x y)a
@@ -8,10 +10,12 @@ defmodule OrbitTp.Body do
   end
 
   def update_pos(name, {x, y}) do
-    Agent.get_and_update(name, &%__MODULE__{&1 | x: x, y: y})
+    Agent.update(name, &%__MODULE__{&1 | x: x, y: y})
   end
 
   def get_pos(name) do
     Agent.get(name, &{&1.x, &1.y})
   end
+
+  def get_body(name), do: Agent.get(name, & &1)
 end
